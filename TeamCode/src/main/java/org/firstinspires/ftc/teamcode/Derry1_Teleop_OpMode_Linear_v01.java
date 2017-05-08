@@ -34,7 +34,7 @@ public class Derry1_Teleop_OpMode_Linear_v01 extends LinearOpMode {
         leftDriveMotor  = hardwareMap.dcMotor.get("leftDriveMotor");
         rightDriveMotor = hardwareMap.dcMotor.get("rightDriveMotor");
         spinnerMotor = hardwareMap.dcMotor.get("spinnerMotor");
-        gripperServo = hardwareMap.dcMotor.get("gripperServo");
+        gripperServo = hardwareMap.servo.get("gripperServo");
         //
         // SET MOTOR DIRECTIONS
         // "Reverse" any motor that runs backwards when connected directly to the battery
