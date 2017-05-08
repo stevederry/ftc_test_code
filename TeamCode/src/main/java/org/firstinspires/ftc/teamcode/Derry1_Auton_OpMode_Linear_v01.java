@@ -47,7 +47,7 @@ public class Derry1_Auton_OpMode_Linear_v01 extends LinearOpMode {
         //
         // DEFINE CODE VARIABLES AND BEGINNING VALUES
         //
-        // ht does public static final double mean?
+        // what does public static final double mean?
         public static final double DriveTimeToCapBall = 10000;  // seconds in ms
         public static final double DrivePowerFast = .8;         // range = 0-1
         //
@@ -58,17 +58,9 @@ public class Derry1_Auton_OpMode_Linear_v01 extends LinearOpMode {
         ///////////////////////////////////////////////////////////////
         // AFTER driver presses PLAY, execute code below this line
         ///////////////////////////////////////////////////////////////
-        runtime.reset();    // reset robot clock to zero
-        //
-        // run until the end of the match (driver presses STOP)
-        while (opModeIsActive()) {
-            // telemetry sends update text from robot phone to controller phone
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.update();
+        driveForward(DriveTimeToCapBall,DrivePowerFast);
+        robotStop();
 
-            driveForward(DriveTimeToCapBall,DrivePowerFast);
-            robotStop();
-        }
 
     }
 
@@ -84,7 +76,14 @@ public class Derry1_Auton_OpMode_Linear_v01 extends LinearOpMode {
     }
     //
     //driveForward(Time,Power)
-    public void driveForward(DriveTimeToCapBall,DrivePowerFast){
+    public void driveForward(Time,Power){
+        leftDriveMotor.setPower(DrivePowerFast);
+        rightDriveMotor.setPower(DrivePowerFast);
+        sleep(DriveTimeToCapBall);
+    }
+    //
+    //turnRight(Time,Power)
+    public void turnRight(DriveTimeToCapBall,DrivePowerFast){
         leftDriveMotor.setPower(DrivePowerFast);
         rightDriveMotor.setPower(DrivePowerFast);
         sleep(DriveTimeToCapBall);
