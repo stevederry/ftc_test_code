@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled; // NOT curently in use
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple; //what is this and when would I use it?
+import com.qualcomm.robotcore.hardware.DcMotorSimple; //NOT in use. What is this and when would I use it?
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.Servo;
 
