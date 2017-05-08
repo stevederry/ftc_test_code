@@ -85,6 +85,8 @@ public class Derry1_Auton_OpMode_Linear_v01 extends LinearOpMode {
     //
     //driveForward(Time,Power)
     public void driveForward(DriveTimeToCapBall,DrivePowerFast){
-
+        leftDriveMotor.setPower(DrivePowerFast);
+        rightDriveMotor.setPower(DrivePowerFast);
+        sleep(DriveTimeToCapBall);
     }
 }
