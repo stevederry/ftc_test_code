@@ -1,7 +1,7 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled; // not currently in use
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
-@TeleOp(name="Derry1_Teleop_OpMode_Linear_v01", group="Linear Opmode")
+@TeleOp(name="Derry1_Teleop_OpMode_Linear_v01", group="Derry_Tests")
 
 public class Derry1_Teleop_OpMode_Linear_v01 extends LinearOpMode {
 
@@ -19,7 +19,7 @@ public class Derry1_Teleop_OpMode_Linear_v01 extends LinearOpMode {
     DcMotor leftDriveMotor = null;
     DcMotor rightDriveMotor = null;
     DcMotor spinnerMotor = null;
-    Servo gripperServo= null;
+    Servo gripperServo = null;
 
     @Override
     public void runOpMode() {
@@ -34,7 +34,7 @@ public class Derry1_Teleop_OpMode_Linear_v01 extends LinearOpMode {
         leftDriveMotor  = hardwareMap.dcMotor.get("leftDriveMotor");
         rightDriveMotor = hardwareMap.dcMotor.get("rightDriveMotor");
         spinnerMotor = hardwareMap.dcMotor.get("spinnerMotor");
-        gripperServo = hardwareMap.dcMotor.get("gripperServo");
+        gripperServo = hardwareMap.servo.get("gripperServo");
         //
         // SET MOTOR DIRECTIONS
         // "Reverse" any motor that runs backwards when connected directly to the battery
