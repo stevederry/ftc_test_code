@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class Derry1_Auton_OpMode_Linear_v01 extends LinearOpMode {
 
     /* Declare OpMode members. */
-    private ElapsedTime runtime = new ElapsedTime(); // when ue private, public, or leave blank?
+    private ElapsedTime runtime = new ElapsedTime(); // when use private, public, or leave blank?
     DcMotor leftDriveMotor = null;
     DcMotor rightDriveMotor = null;
     DcMotor spinnerMotor = null;
@@ -30,13 +30,13 @@ public class Derry1_Auton_OpMode_Linear_v01 extends LinearOpMode {
         // Values after 'get' MUST match EXACTLY the names used when the
         // robot configuration was built using the FTC Robot Controler app
         // on the robot controller phone
-        leftDriveMotor  = hardwareMap.dcMotor.get("leftDriveMotor");
+        leftDriveMotor = hardwareMap.dcMotor.get("leftDriveMotor");
         rightDriveMotor = hardwareMap.dcMotor.get("rightDriveMotor");
         spinnerMotor = hardwareMap.dcMotor.get("spinnerMotor");
         gripperServo = hardwareMap.servo.get("gripperServo");
         //
         // SET MOTOR DIRECTIONS
-        // "Reverse" any motor that runs backwards when connected directly to the battery
+        // "Reverse" any motor that runs backwards (relative to robot) when powered by positive value
         leftDriveMotor.setDirection(DcMotor.Direction.REVERSE);
         rightDriveMotor.setDirection(DcMotor.Direction.FORWARD);
         spinnerMotor.setDirection(DcMotor.Direction.FORWARD);
@@ -48,8 +48,16 @@ public class Derry1_Auton_OpMode_Linear_v01 extends LinearOpMode {
         // DEFINE CODE VARIABLES AND BEGINNING VALUES
         //
         // what does public static final double mean?
-        public static final double DriveTimeToCapBall = 10000;  // seconds in ms
-        public static final double DrivePowerFast = .8;         // range = 0-1
+        //
+        // Drive times: all values are in milliseconds
+        public static final double DriveTimeToCapBall = 10000;
+        public static final double DriveTime45DegTurn = 500;
+        public static final double DriveTime90DegTurn = DriveTime45DegTurn*2;
+        //
+        // Drive speeds: all values use range of 0 to 1
+        public static final double DrivePowerFast = .8;
+        public static final double DrivePowerMedium = .5;
+        public static final double DrivePowerSlow = .2;
         //
         // END OF PREPARATIONS
         //
@@ -58,17 +66,23 @@ public class Derry1_Auton_OpMode_Linear_v01 extends LinearOpMode {
         ///////////////////////////////////////////////////////////////
         // AFTER driver presses PLAY, execute code below this line
         ///////////////////////////////////////////////////////////////
+        //
+        // Drive to Cap Ball, then stop
         driveForward(DriveTimeToCapBall,DrivePowerFast);
         robotStop();
-
-
+        //
+        // Pivot left to nudge Cap Ball off center vortex base, then stop
+        pivotLeft(DriveTime45DegTurn,DrivePowerMedium);
+        robotStop();
     }
-
+    ///////////////////////////////////////////////////////////////
+    // END of AUTONOMOUS code 
+    ///////////////////////////////////////////////////////////////
     //
     // DEFINE ALL METHODS
     //
     // robotStop()
-    // stop all motors in current locationby setting all power to zero
+    // stop all motors at current location by setting all power to zero
     public void robotStop(){
         leftDriveMotor.setPower(0);
         rightDriveMotor.setPower(0);
@@ -77,15 +91,22 @@ public class Derry1_Auton_OpMode_Linear_v01 extends LinearOpMode {
     //
     //driveForward(Time,Power)
     public void driveForward(Time,Power){
-        leftDriveMotor.setPower(DrivePowerFast);
-        rightDriveMotor.setPower(DrivePowerFast);
-        sleep(DriveTimeToCapBall);
+        leftDriveMotor.setPower(Power);
+        rightDriveMotor.setPower(Power);
+        sleep(Time);
     }
     //
-    //turnRight(Time,Power)
-    public void turnRight(DriveTimeToCapBall,DrivePowerFast){
-        leftDriveMotor.setPower(DrivePowerFast);
-        rightDriveMotor.setPower(DrivePowerFast);
-        sleep(DriveTimeToCapBall);
+    //pivotRight(Time,Power)
+    public void pivotRight(Time,Power){
+        leftDriveMotor.setPower(Power);
+        rightDriveMotor.setPower(-Power);
+        sleep(Time);
+    }
+    //
+    //pivotLeft(Time,Power)
+    public void pivotLeft(Time,Power){
+        leftDriveMotor.setPower(-Power);
+        rightDriveMotor.setPower(Power);
+        sleep(Time);
     }
 }
