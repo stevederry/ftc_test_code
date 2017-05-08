@@ -1,7 +1,7 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled; // NOT curently in use
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -21,7 +21,7 @@ public class Derry1_Teleop_OpMode_Linear_v01 extends LinearOpMode {
     DcMotor spinnerMotor = null;
     Servo gripperServo= null;
 
-    @Override
+    @Override       // what does OVERRIDE do/mean?
     public void runOpMode() {
         // display status and OpMode name on controller phone
         telemetry.addData("Status", "Initialized", "name");
