@@ -23,6 +23,27 @@ public class Derry1_Auton_OpMode_Linear_v01 extends LinearOpMode {
     DcMotor spinnerMotor = null;
     Servo gripperServo= null;
 
+    // Constants should generally be defined outside of
+    // method bodies (especially if you ever want to access
+    // them outside of this class)
+    // DEFINE CODE VARIABLES AND BEGINNING VALUES
+    //
+    // what does public static final double mean?
+    //    public means it can be accessed from other classes
+    //    final means its value never changes (constant)
+    //    static means there is only one copy no matter how many instances of the class you create
+    //
+    // Drive times: all values are in milliseconds
+    public static final double DriveTimeToCapBall = 10000;
+    public static final double DriveTimeCapBallToBase = 2000;
+    public static final double DriveTime45DegTurn = 500;
+    public static final double DriveTime90DegTurn = DriveTime45DegTurn*2;
+    //
+    // Drive speeds: all values use range of 0 to 1
+    public static final double DrivePowerFast = .8;
+    public static final double DrivePowerMedium = .5;
+    public static final double DrivePowerSlow = .2;
+
     @Override       // what does OVERRIDE do/mean?
     public void runOpMode() throws InterruptedException  {  //what is "interrupted exception"?
         // display status and OpMode name on controller phone
@@ -48,20 +69,6 @@ public class Derry1_Auton_OpMode_Linear_v01 extends LinearOpMode {
         robotStop();                        // Use method call to set all DC motors to STOP
         gripperServo.setPosition(100);      // Set SERVO motor to desired address
         //
-        // DEFINE CODE VARIABLES AND BEGINNING VALUES
-        //
-        // what does public static final double mean?
-        //
-        // Drive times: all values are in milliseconds
-        public static final double DriveTimeToCapBall = 10000;
-        public static final double DriveTimeCapBallToBase = 2000;
-        public static final double DriveTime45DegTurn = 500;
-        public static final double DriveTime90DegTurn = DriveTime45DegTurn*2;
-        //
-        // Drive speeds: all values use range of 0 to 1
-        public static final double DrivePowerFast = .8;
-        public static final double DrivePowerMedium = .5;
-        public static final double DrivePowerSlow = .2;
         //
         // END OF PREPARATIONS
         //
@@ -108,20 +115,24 @@ public class Derry1_Auton_OpMode_Linear_v01 extends LinearOpMode {
     public void driveForward(double Time, double Power){
         leftDriveMotor.setPower(Power);
         rightDriveMotor.setPower(Power);
-        sleep(Time);
+
+        // if you want this to be in seconds and not milliseconds
+        // try:
+        //  sleep((long) (Time * 1000.0));
+        sleep((long) Time);
     }
     //
     //pivotRight(Time,Power)
     public void pivotRight(double Time, double Power){
         leftDriveMotor.setPower(Power);
         rightDriveMotor.setPower(-Power);
-        sleep(Time);
+        sleep((long) Time);
     }
     //
     //pivotLeft(Time,Power)
     public void pivotLeft(double Time, double Power){
         leftDriveMotor.setPower(-Power);
         rightDriveMotor.setPower(Power);
-        sleep(Time);
+        sleep((long) Time);
     }
 }
