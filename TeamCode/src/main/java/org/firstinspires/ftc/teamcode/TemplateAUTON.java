@@ -145,7 +145,7 @@ public class TemplateAUTON extends LinearOpMode {
         sweeperMotor.setPower(0);
     }
     //
-    //driveForward(Time,Power)
+    // driveForward(Time,Power)
     public void driveForward(double Time, double Power){    // the variable names Time and Power will be assigned
                                                             //   to the values passed into the method, in the order
                                                             //   they are received
@@ -160,15 +160,20 @@ public class TemplateAUTON extends LinearOpMode {
                                                             //   to the values passed into the method, in the order
                                                             //   they are received
         leftDriveMotor.setPower(Power);                     // run motor with passed Power value
-        rightDriveMotor.setPower(-Power);                    // run motor with passed Power value
+        rightDriveMotor.setPower(-Power);                   // run motor with passed Power value inverted
+                                                            //   so motor will spin in reverse
         sleep((long) Time);                                 // wait here in code for duration of passed Time value,
-                                                            //   (allows motors to turn for duration of Time)
+                                                            //   (allows motors to run for duration of Time)
     }
     //
-    //spinLeft(Time,Power)
-    public void spinLeft(double Time, double Power){
-        leftDriveMotor.setPower(-Power);
-        rightDriveMotor.setPower(Power);
-        sleep((long) Time);
+    // spinLeft(Time,Power)
+    public void spinLeft(double Time, double Power){        // the variable names Time and Power will be assigned
+                                                            //   to the values passed into the method, in the order
+                                                            //   they are received
+        leftDriveMotor.setPower(Power);                     // run motor with passed Power value
+                                                            //   so motor will spin in reverse
+        rightDriveMotor.setPower(-Power);                   // run motor with passed Power value inverted
+        sleep((long) Time);                                 // wait here in code for duration of passed Time value,
+                                                            //   (allows motors to run for duration of Time)
     }
 }
