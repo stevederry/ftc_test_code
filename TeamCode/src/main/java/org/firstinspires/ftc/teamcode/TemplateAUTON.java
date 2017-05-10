@@ -67,7 +67,7 @@ public class TemplateAUTON extends LinearOpMode {
     public static final double DrivePowerSlow = .2;
     //
     //  ?????????? Should the INITIALIZE HARDWARE VARIABLES and/or SET MOTOR DIRECTIONS sections
-    //               below move to here to be grouped with other variables?
+    //  ??????????   below move to here to be grouped with other variables?
     //
     @Override
     // Override is a note to the compiler, that you expect that you are replacing a method
@@ -148,6 +148,10 @@ public class TemplateAUTON extends LinearOpMode {
     //   by the program multiple times. A method can have all of its values set internally (see robotStop, below)
     //   or use values passed to it each time the program calls the method (see driveForward, below). Variables allow the
     //   method's code to be written once but adapt to different situations in the section of code that is calling it.
+    //
+    //   ?????????? Can/should METHODS be stored in a separate file so that more than one program file
+    //   ??????????  can access them? And so that changes to those METHODS can be made in one place rather
+    //   ??????????  than in each instance of a "calling" program?
     //
     // robotStop()
     // stop all motors at current location by setting all power to zero
