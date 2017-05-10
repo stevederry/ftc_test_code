@@ -27,7 +27,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 // 
 // DEFINE OpMode
 // @type(name,group) 
-@Autonomous(name="TemplateAUTON.java", group="Linear OpMode")    
+@Autonomous(name="TemplateAUTON.java", group="Derry_FTC_Templates")    
 //
 // DEFINE Class
 // access level, class name, name of class this new class extends
@@ -47,8 +47,8 @@ public class TemplateAUTON extends LinearOpMode {
     Servo gripperServo= null;                               // on the robot controller phone
 
     // Constants should generally be defined outside of
-    //   method bodies (here) instead of below (inside runOpMode())
-    //   (especially if you ever want to access them outside of this class)
+    //   method bodies (here) instead of below (inside runOpMode()),
+    //   especially if you ever want to access them outside of this class
     //
     // DEFINE CODE VARIABLES AND BEGINNING VALUES
     //    public means it can be accessed from other classes
@@ -68,7 +68,7 @@ public class TemplateAUTON extends LinearOpMode {
 
     @Override
     // Override is a note to the compiler, that you expect that you are replacing a method
-    // with the same name from the parent (extends XXX) class). That way if you typo/change
+    // with the same name from the parent (extends XXX class). That way if you typo/change
     // the method signature you will get an error.
     //
     // call runOpMode() method from the parent class of LinearOpMode
@@ -123,7 +123,7 @@ public class TemplateAUTON extends LinearOpMode {
         driveForward(DriveTimeCapBallToBase,DrivePowerSlow);    
         robotStop();                                        // final stop until beginning of Teleop
         //
-        // 6. If any parts of robot need to be reporsitioned (arms, etc.) to prepare for Teleop,
+        // 6. If any parts of robot need to be repositioned (arms, etc.) to prepare for Teleop,
         //    place that code here before next "}" character
         // 7. Wait for Teleop
     }
