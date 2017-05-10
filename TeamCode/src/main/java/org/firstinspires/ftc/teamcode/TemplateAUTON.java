@@ -43,8 +43,8 @@ public class TemplateAUTON extends LinearOpMode {
     // hardware type, specific name of hardware, starting value
     DcMotor leftDriveMotor = null;                          // One line for each hardware item
     DcMotor rightDriveMotor = null;                         // Values before '=' MUST match EXACTLY the names used when the
-    DcMotor sweeperMotor = null;                            // robot configuration was built using the FTC Robot Controler app
-    Servo gripperServo= null;                               // on the robot controller phone
+    DcMotor sweeperMotor = null;                            //   robot configuration was built using the FTC Robot Controler app
+    Servo gripperServo= null;                               //   on the robot controller phone
 
     // Constants should generally be defined outside of
     //   method bodies (here) instead of below (inside runOpMode()),
@@ -68,8 +68,8 @@ public class TemplateAUTON extends LinearOpMode {
 
     @Override
     // Override is a note to the compiler, that you expect that you are replacing a method
-    // with the same name from the parent (extends XXX class). That way if you typo/change
-    // the method signature you will get an error.
+    //   with the same name from the parent (extends XXX class). That way if you typo/change
+    //   the method signature you will get an error.
     //
     // call runOpMode() method from the parent class of LinearOpMode
     public void runOpMode() throws InterruptedException  {  // what is "interrupted exception"?
@@ -170,9 +170,9 @@ public class TemplateAUTON extends LinearOpMode {
     public void spinLeft(double Time, double Power){        // the variable names Time and Power will be assigned
                                                             //   to the values passed into the method, in the order
                                                             //   they are received
-        leftDriveMotor.setPower(Power);                     // run motor with passed Power value
+        leftDriveMotor.setPower(-Power);                    // run motor with passed Power value inverted
                                                             //   so motor will spin in reverse
-        rightDriveMotor.setPower(-Power);                   // run motor with passed Power value inverted
+        rightDriveMotor.setPower(Power);                    // run motor with passed Power value
         sleep((long) Time);                                 // wait here in code for duration of passed Time value,
                                                             //   (allows motors to run for duration of Time)
     }
