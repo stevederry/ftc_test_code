@@ -29,12 +29,15 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 //
 // DEFINE Class
 // access level, class name, name of class this new class extends
-public class TemplateAUTON.java extends LinearOpMode {
+public class TemplateAUTON extends LinearOpMode {
     //
     // DECLARE OpMode MEMBERS
     // Utilities
     // access level, utility name, starting value
     private ElapsedTime runtime = new ElapsedTime();        // when use private, public, or nothing?
+                                                            // use private unless you need access
+                                                            // from other classes. Try to be explicit
+
     // Hardware
     // hardware type, specific name of hardware, starting value
     DcMotor leftDriveMotor = null;                          // One line for each hardware item
@@ -42,7 +45,24 @@ public class TemplateAUTON.java extends LinearOpMode {
     DcMotor sweeperMotor = null;                            // robot configuration was built using the FTC Robot Controler app
     Servo gripperServo= null;                               // on the robot controller phone
 
+    // DEFINE CODE VARIABLES AND BEGINNING VALUES
+    // access level, modifiers, variable type, variable name = value
+    //
+    // Drive times: all values are in milliseconds
+    public static final double DriveTimeToCapBall = 10000;          // what does public static final double mean?
+    public static final double DriveTimeCapBallToBase = 2000;
+    public static final double DriveTime45DegTurn = 500;
+    public static final double DriveTime90DegTurn = DriveTime45DegTurn*2;
+    //
+    // Drive speeds: all values use range of 0 to 1
+    public static final double DrivePowerFast = .8;
+    public static final double DrivePowerMedium = .5;
+    public static final double DrivePowerSlow = .2;
+
     @Override                                               // what does OVERRIDE do/mean?
+    // Override is a note to the compiler, that you expect that you are replacing a method
+    // with the same name from the parent (extends XXX) class). That way if you typo/change
+    // the method signature you will get an error.
     public void runOpMode() throws InterruptedException  {  // what is "interrupted exception"?
         // display status and OpMode name on controller phone
         telemetry.addData("Status", "Initialized", "name"); // what info to send to controller phone
@@ -69,19 +89,6 @@ public class TemplateAUTON.java extends LinearOpMode {
         robotStop();                        // Use method call to set all DC motors to STOP (power value = 0)
         gripperServo.setPosition(100);      // Set SERVO motor to desired address (100 is just an example; value depends on robot)
         //
-        // DEFINE CODE VARIABLES AND BEGINNING VALUES
-        // access level, modifiers, variable type, variable name = value
-        //
-        // Drive times: all values are in milliseconds
-        public static final double DriveTimeToCapBall = 10000;          // what does public static final double mean?
-        public static final double DriveTimeCapBallToBase = 2000;
-        public static final double DriveTime45DegTurn = 500;
-        public static final double DriveTime90DegTurn = DriveTime45DegTurn*2;
-        //
-        // Drive speeds: all values use range of 0 to 1
-        public static final double DrivePowerFast = .8;
-        public static final double DrivePowerMedium = .5;
-        public static final double DrivePowerSlow = .2;
         //
         // END OF PREPARATIONS
         //
@@ -122,27 +129,27 @@ public class TemplateAUTON.java extends LinearOpMode {
     public void robotStop(){
         leftDriveMotor.setPower(0);
         rightDriveMotor.setPower(0);
-        spinnerMotor.setPower(0);
+        sweeperMotor.setPower(0);
     }
     //
     //driveForward(Time,Power)
     public void driveForward(double Time, double Power){
         leftDriveMotor.setPower(Power);
         rightDriveMotor.setPower(Power);
-        sleep(Time);
+        sleep((long) Time);
     }
     //
     //spinRight(Time,Power)
     public void spinRight(double Time, double Power){
         leftDriveMotor.setPower(Power);
         rightDriveMotor.setPower(-Power);
-        sleep(Time);
+        sleep((long) Time);
     }
     //
     //spinLeft(Time,Power)
     public void spinLeft(double Time, double Power){
         leftDriveMotor.setPower(-Power);
         rightDriveMotor.setPower(Power);
-        sleep(Time);
+        sleep((long) Time);
     }
 }
