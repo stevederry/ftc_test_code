@@ -25,9 +25,10 @@ import com.qualcomm.robotcore.hardware.Servo;
 // Utilities (specific)
 import com.qualcomm.robotcore.util.ElapsedTime;
 // 
-// DEFINE OpMode
+// DEFINE OpMode            ?????????? In this context, is OpMode the proper term for this program?
 // @type(name,group) 
-@Autonomous(name="TemplateAUTON.java", group="Derry_FTC_Templates")    
+@Autonomous(name="TemplateAUTON.java", group="Derry_FTC_Templates")  // ?????????? Why does this line not use a ";" at end?
+                                                                     // ?????????? How and where does the value for "group" get used?
 //
 // DEFINE Class
 // access level, class name, name of class this new class extends
@@ -38,6 +39,7 @@ public class TemplateAUTON extends LinearOpMode {
     // access level, utility name, starting value
     private ElapsedTime runtime = new ElapsedTime();        // Use private unless you need access
                                                             //   from other classes. Try to be explicit
+                                                            //   ?????????? What does being explcit mean in this context?
     //
     // Hardware
     // hardware type, specific name of hardware, starting value
@@ -51,9 +53,9 @@ public class TemplateAUTON extends LinearOpMode {
     //   especially if you ever want to access them outside of this class
     //
     // DEFINE CODE VARIABLES AND BEGINNING VALUES
-    //    public means it can be accessed from other classes
-    //    final means its value never changes (constant)
-    //    static means there is only one copy no matter how many instances of the class you create
+    //   public means it can be accessed from other classes
+    //   final means its value never changes (constant)
+    //   static means there is only one copy no matter how many instances of the class you create
     //
     // Drive times: all values are in milliseconds
     public static final double DriveTimeToCapBall = 10000;        
@@ -82,9 +84,9 @@ public class TemplateAUTON extends LinearOpMode {
         //
         // INITIALIZE HARDWARE VARIABLES
         // Values after 'get' MUST match EXACTLY the names used when the
-        // robot configuration was built using the FTC Robot Controler app
-        // on the robot controller phone
-        // hardware variable name = location within hardware map (" value as defined in hardware map ");
+        //   robot configuration was built using the FTC Robot Controler app
+        //   on the robot controller phone
+        //   hardware variable name = location within hardware map (" value as defined in hardware map ");
         leftDriveMotor = hardwareMap.dcMotor.get("leftDriveMotor");
         rightDriveMotor = hardwareMap.dcMotor.get("rightDriveMotor");
         sweeperMotor = hardwareMap.dcMotor.get("sweeperMotor");
