@@ -9,17 +9,17 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // Put this in IMPORT PROGRAMMING ELEMENTS > HARDWARE section
-import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.ColorSensor;           // tell program that ColorSensor is present on robot        
 //
 //
     // Put this in CLASS > DECLARE OpMode MEMBERS setion
-    ColorSensor colorSensorForBeacon = null;
+    ColorSensor colorSensorForBeacon = null;                  // 
     //
     // Put this in CLASS > DEFINE CODE VARIABLES AND BEGINNING VALUES
     public static final double Red = 1;                       // 1 is sample value; this would need to be calibrated
     public static final double Green = 2;                     // 2 is sample value; this would need to be calibrated
     public static final double Blue = 3;                      // 3 is sample value; this would need to be calibrated
-    public static final double ColorRangeTolerance = .3;      // .3 is sample value; this would need to be calibrated
+    public static final double ColorRangeTolerance = .2;      // .2 is sample value; this would need to be calibrated
     public static final string DesiredColorValue = "blue";    // this would be defined for proper version of AUTON code
     //
     // put this in the CLASS > runOpMode secion
@@ -34,8 +34,8 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
         // put this in CLASS > runOpMode > INITIALIZE HARDWARE VARIABLES section,
         //  just above END OF PREPARATIONS marker and with any other last-check-before-running items
         //  such as setting servo positions, confirming all-motors are stopped, etc.
-        color_sensor.enableLed(true);                       // Turn the LED on
-        color_sensor.enableLed(false);                      // Turn the LED off
+        colorSensorForBeacon.enableLed(true);                       // Turn the LED on
+        colorSensorForBeacon.enableLed(false);                      // Turn the LED off
         //
         ///////////////////////////////////////////////////////////////
         // END OF PREPARATIONS
