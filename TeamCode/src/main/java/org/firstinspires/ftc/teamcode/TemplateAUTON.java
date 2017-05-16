@@ -47,7 +47,7 @@ public class TemplateAUTON extends LinearOpMode {
     DcMotor rightDriveMotor = null;                         // Values before '=' MUST match EXACTLY the names used when the
     DcMotor sweeperMotor = null;                            //   robot configuration was built using the FTC Robot Controler app
     Servo gripperServo= null;                               //   on the robot controller phone
-
+    Servo sweeperServo= null;                               
     // Constants should generally be defined outside of
     //   method bodies (here) instead of below (inside runOpMode()),
     //   especially if you ever want to access them outside of this class
