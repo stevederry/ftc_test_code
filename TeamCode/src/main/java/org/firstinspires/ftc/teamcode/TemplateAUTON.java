@@ -35,38 +35,38 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class TemplateAUTON extends LinearOpMode {
     //
     // DECLARE OpMode MEMBERS
-    // Utilities
-    // access level, utility name, starting value
+    //   Utilities
+    //   access level, utility name, starting value
     private ElapsedTime runtime = new ElapsedTime();        // Use private unless you need access
                                                             //   from other classes. Try to be explicit
                                                             //   ?????????? What does being explcit mean in this context?
     //
-    // Hardware
-    // hardware type, specific name of hardware, starting value
+    //   Hardware
+    //   hardware type, specific name of hardware, starting value
     DcMotor leftDriveMotor = null;                          // One line for each hardware item
     DcMotor rightDriveMotor = null;                         // Values before '=' MUST match EXACTLY the names used when the
     DcMotor sweeperMotor = null;                            //   robot configuration was built using the FTC Robot Controler app
     Servo gripperServo= null;                               //   on the robot controller phone
     Servo sweeperServo= null;                               
-    // Constants should generally be defined outside of
-    //   method bodies (here) instead of below (inside runOpMode()),
-    //   especially if you ever want to access them outside of this class
+    //   Constants should generally be defined outside of
+    //     method bodies (here) instead of below (inside runOpMode()),
+    //     especially if you ever want to access them outside of this class
     //
-    // DEFINE CODE VARIABLES AND BEGINNING VALUES
+    // DEFINE CODE CONSTANTS, VARIABLES, AND BEGINNING VALUES
     //   public means it can be accessed from other classes
     //   final means its value never changes (constant)
     //   static means there is only one copy no matter how many instances of the class you create
     //
     // Drive times: all values are in milliseconds
-    public static final double DriveTimeToCapBall = 10000;        
-    public static final double DriveTimeCapBallToBase = 2000;
-    public static final double DriveTime45DegTurn = 500;
-    public static final double DriveTime90DegTurn = DriveTime45DegTurn*2;
+    public static final double DRIVE_TIME_TO_CAP_BALL = 10000;        
+    public static final double DRIVE_TIME_TO_CAP_BALL_TO_BASE = 2000;
+    public static final double DRIVE_TIME_45_DEG_TURN = 500;
+    public static final double DRIVE_TIME_90_DEG_TURN = DRIVE_TIME_45_DEG_TURN * 2;
     //
     // Drive speeds: all values use range of 0 to 1
-    public static final double DrivePowerFast = .8;
-    public static final double DrivePowerMedium = .5;
-    public static final double DrivePowerSlow = .2;
+    public static final double DRIVE_POWER_FAST = .8;
+    public static final double DRIVE_POWER_MEDIUM = .5;
+    public static final double DRIVE_POWER_SLOW = .2;
     //
     //  ?????????? Should the INITIALIZE HARDWARE VARIABLES and/or SET MOTOR DIRECTIONS sections
     //  ??????????   below move to here to be grouped with other variables?
@@ -80,6 +80,7 @@ public class TemplateAUTON extends LinearOpMode {
     public void runOpMode() throws InterruptedException  {              // ?????????? what is "interrupted exception"?
         // display status and OpMode name on controller phone
         telemetry.addData("Status", "Initialized", "name"); // specific info to send to controller phone
+                                                            // ?????????? where does "name" come from?
         telemetry.update();                                 // send info now
         //
         // INITIALIZE HARDWARE VARIABLES
@@ -96,11 +97,11 @@ public class TemplateAUTON extends LinearOpMode {
         // "Reverse" any motor that runs backwards (relative to robot) when powered by positive value
         // hardware name.setDirection(DcMotor.Direction.DIRECTION)
         leftDriveMotor.setDirection(DcMotor.Direction.REVERSE);     // ?????????? are ALL CAPS required?
-        rightDriveMotor.setDirection(DcMotor.Direction.FORWARD);
+        rightDriveMotor.setDirection(DcMotor.Direction.FORWARD);    // ?????????? are these ALL CAPS items constants?
         sweeperMotor.setDirection(DcMotor.Direction.FORWARD);       // assumes sweeperMotor is same orientation as rightDriveMotor
         //
         // SET ALL MOTORS TO DESIRED STARTING STATUS
-        robotStop();                        // Use method call to set all DC motors to STOP (power value = 0)
+        stopRobot();                        // Use method call to set all DC motors to STOP (power value = 0)
         gripperServo.setPosition(100);      // Set SERVO motor to desired address (100 is just an example; value depends on robot)
         //
         ///////////////////////////////////////////////////////////////
@@ -119,21 +120,21 @@ public class TemplateAUTON extends LinearOpMode {
         // 1. Start at midpoint of wall (positioned by drivers prior to game start)
         //
         // 2. Drive forward to Cap Ball, making contact, then pause to let Cap Ball flex/bounce/roll
-        driveForward(DriveTimeToCapBall,DrivePowerFast);    // Arguments MUST be in order expected by method
-        robotStop();                                        // Stop then sleep allows Cap Ball to bounce/flex before rogbot moves again        
+        driveForward(DRIVE_TIME_TO_CAP_BALL,DRIVE_POWER_FAST);    // Arguments MUST be in order expected by method
+        stopRobot();                                        // Stop then sleep allows Cap Ball to bounce/flex before rogbot moves again        
         sleep((long) 2);                                    // 2 seconds
         //
         // 3. Spin left to push Cap Ball off center vortex base, then pause to let Cap Ball flex/bounce/roll
-        spinLeft(DriveTime45DegTurn,DrivePowerMedium);      // Spin 45 deg. to left
-        robotStop();                                        // Stop then sleep allows Cap Ball to bounce/flex before rogbot moves again        
+        spinLeft(DRIVE_TIME_45_DEG_TURN,DRIVE_POWER_MEDIUM);      // Spin 45 deg. to left
+        stopRobot();                                        // Stop then sleep allows Cap Ball to bounce/flex before rogbot moves again        
         sleep((long) 2);                                    // 2 seconds
         //
         // 4. Spin right to prepare to park on center vortex base
-        spinRight(DriveTime45DegTurn,DrivePowerMedium);     // Spin 45 deg. to right to return to original orientation
+        spinRight(DRIVE_TIME_45_DEG_TURN,DRIVE_POWER_MEDIUM);     // Spin 45 deg. to right to return to original orientation
         //
         // 5. Drive forward onto center vortex base, then stop
-        driveForward(DriveTimeCapBallToBase,DrivePowerSlow);    
-        robotStop();                                        // Final stop until beginning of Teleop
+        driveForward(DRIVE_TIME_TO_CAP_BALL_TO_BASE,DRIVE_POWER_SLOW);    
+        stopRobot();                                        // Final stop until beginning of Teleop
         //
         // 6. If any parts of robot need to be repositioned (arms, etc.) to prepare for Teleop,
         //    place that code here before next "}" character
@@ -155,15 +156,15 @@ public class TemplateAUTON extends LinearOpMode {
     //   ??????????  can access them? And so that changes to those METHODS can be made in one place rather
     //   ??????????  than in each instance of a "calling" program?
     //
-    // robotStop()
-    // stop all motors at current location by setting all power to zero
-    public void robotStop(){                                // The empty "()" section means that this method
+    // METHOD stopRobot()
+    //    stop all motors at current location by setting all power to zero
+    public void stopRobot(){                                // The empty "()" section means that this method
         leftDriveMotor.setPower(0);                         //   does not rely on values passed into it
         rightDriveMotor.setPower(0);                        //   from the section of code that calls it
         sweeperMotor.setPower(0);                           //   and uses the values entered directly here (0 in this case)
     }
     //
-    // driveForward(Time,Power)
+    // METHOD driveForward(Time,Power)
     public void driveForward(double Time, double Power){    // The variable names Time and Power will be assigned
                                                             //   to the values passed into the method, in the order
                                                             //   they are received
@@ -173,7 +174,7 @@ public class TemplateAUTON extends LinearOpMode {
                                                             //   (allows motors to turn for duration of Time)
     }
     //
-    //spinRight(Time,Power)
+    // METHOD spinRight(Time,Power)
     public void spinRight(double Time, double Power){       // The variable names Time and Power will be assigned
                                                             //   to the values passed into the method, in the order
                                                             //   they are received
@@ -184,7 +185,7 @@ public class TemplateAUTON extends LinearOpMode {
                                                             //   (allows motors to run for duration of Time)
     }
     //
-    // spinLeft(Time,Power)
+    // METHOD spinLeft(Time,Power)
     public void spinLeft(double Time, double Power){        // The variable names Time and Power will be assigned
                                                             //   to the values passed into the method, in the order
                                                             //   they are received
