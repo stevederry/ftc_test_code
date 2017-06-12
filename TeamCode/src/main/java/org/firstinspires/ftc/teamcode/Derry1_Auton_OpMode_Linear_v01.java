@@ -9,7 +9,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-
 // DEFINE OpMode
 // FORMAT: type(name,group) 
 @Autonomous(name="Derry1_Auton_OpMode_Linear_v01", group="DerryTests")    
