@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 //
 // DEFINE Class
 // FORMAT: access, class name, name of class that this new class extends
-public class Derry1_Auton_OpMode_Linear_v01 extends OpMode {
+public class Derry1_Auton_OpMode_Linear_v01 extends LinearOpMode {
     //
     // DECLARE OpMode MEMBERS
     private ElapsedTime runtime = new ElapsedTime();
