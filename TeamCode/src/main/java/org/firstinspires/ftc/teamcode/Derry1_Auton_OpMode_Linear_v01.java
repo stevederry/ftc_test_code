@@ -2,9 +2,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-// this code originally used LinearOpMode, but switched to OpMode
-// import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -44,6 +42,10 @@ public class Derry1_Auton_OpMode_Linear_v01 extends OpMode {
     public static final double DRIVE_POWER_FAST = DRIVE_POWER_MAX * .8;
     public static final double DRIVE_POWER_MEDIUM = DRIVE_POWER_MAX * .5;
     public static final double DRIVE_POWER_SLOW = DRIVE_POWER_MAX * .2;
+    //
+    // Start / Rest / Reset values
+    public static final double GRIPPER_RESET_ADDRESS = 100;
+
 
     @Override                                                       // what does OVERRIDE do/mean?
     public void runOpMode() throws InterruptedException  {          // what is "interrupted exception"?
@@ -68,7 +70,7 @@ public class Derry1_Auton_OpMode_Linear_v01 extends OpMode {
         //
         // SET ALL MOTORS TO DESIRED STARTING STATUS
         stopRobot();                                                // use method call to set all DC motors to STOP
-        gripperServo.setPosition(100);                              // set SERVO motor to desired address
+        gripperServo.setPosition(GRIPPER_RESET_ADDRESS);            // set SERVO motor to desired address
         //
         //
         // END OF PREPARATIONS
@@ -102,6 +104,9 @@ public class Derry1_Auton_OpMode_Linear_v01 extends OpMode {
     // END of AUTONOMOUS code 
     ///////////////////////////////////////////////////////////////
     //
+    ///////////////////////////////////////////////////////////////
+    // START of METHODS
+    ///////////////////////////////////////////////////////////////
     // DEFINE ALL METHODS
     //   Methods are small sections of code that are written once but can be used ("called")
     //   by the program multiple times. A method can have all of its values set internally (see robotStop, below)
@@ -139,4 +144,7 @@ public class Derry1_Auton_OpMode_Linear_v01 extends OpMode {
         rightDriveMotor.setPower(Power);
         sleep((long) Time);
     }
+    ///////////////////////////////////////////////////////////////
+    // END of METHODS
+    ///////////////////////////////////////////////////////////////
 }
