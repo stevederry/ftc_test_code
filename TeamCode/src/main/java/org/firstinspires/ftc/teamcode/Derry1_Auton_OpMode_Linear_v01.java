@@ -7,17 +7,16 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-
 // DEFINE OpMode
-// type(name,group) 
-@Autonomous(name="Derry1_Auton_OpMode_Linear_v01", group="Linear Opmode")    
+// FORMAT: type(name,group) 
+@Autonomous(name="Derry1_Auton_OpMode_Linear_v01", group="DerryTests")    
 //
 // DEFINE Class
-// access, class name, name of class this new class extends
+// FORMAT: access, class name, name of class that this new class extends
 public class Derry1_Auton_OpMode_Linear_v01 extends LinearOpMode {
     //
     // DECLARE OpMode MEMBERS
-    private ElapsedTime runtime = new ElapsedTime();
+    private ElapsedTime runtime = new ElapsedTime();                // creates new ElapsedTime object
     DcMotor leftDriveMotor = null;
     DcMotor rightDriveMotor = null;
     DcMotor spinnerMotor = null;
@@ -33,20 +32,25 @@ public class Derry1_Auton_OpMode_Linear_v01 extends LinearOpMode {
     //    static means there is only one copy no matter how many instances of the class you create
     //
     // Drive times: all values are in milliseconds
-    public static final double DriveTimeToCapBall = 10000;
-    public static final double DriveTimeCapBallToBase = 2000;
-    public static final double DriveTime45DegTurn = 500;
-    public static final double DriveTime90DegTurn = DriveTime45DegTurn*2;
+    public static final double DRIVE_TIME_TO_CAP_BALL = 10000;
+    public static final double DRIVE_TIME_CAP_BALL_TO_BASE = 2000;
+    public static final double DRIVE_TIME_45_DEG_PIVOT = 500;
+    public static final double DRIVE_TIME_90_DEG_PIVOT = DRIVE_TIME_45_DEG_PIVOT * 2;
     //
     // Drive speeds: all values use range of 0 to 1
-    public static final double DrivePowerFast = .8;
-    public static final double DrivePowerMedium = .5;
-    public static final double DrivePowerSlow = .2;
+    public static final double DRIVE_POWER_MAX = 1.0;
+    public static final double DRIVE_POWER_FAST = DRIVE_POWER_MAX * .8;
+    public static final double DRIVE_POWER_MEDIUM = DRIVE_POWER_MAX * .5;
+    public static final double DRIVE_POWER_SLOW = DRIVE_POWER_MAX * .2;
+    //
+    // Start / Rest / Reset values
+    public static final double GRIPPER_RESET_ADDRESS = 100;
 
-    @Override                                                       // what does OVERRIDE do/mean?
-    public void runOpMode() throws InterruptedException  {          // what is "interrupted exception"?
+
+    @Override                                                      // ???? what does OVERRIDE do/mean?
+    public void runOpMode() throws InterruptedException  {         // ???? what is "interrupted exception"?
         // display status and OpMode name on controller phone
-        telemetry.addData("Status", "Initialized", "name");
+        telemetry.addData("Status", "Initialized", "name");        // ???? why are these in ", and where did they come from?
         telemetry.update();
         //
         // INITIALIZE HARDWARE VARIABLES
@@ -60,55 +64,60 @@ public class Derry1_Auton_OpMode_Linear_v01 extends LinearOpMode {
         //
         // SET MOTOR DIRECTIONS
         // "Reverse" any motor that runs backwards (relative to robot) when powered by positive value
-        leftDriveMotor.setDirection(DcMotor.Direction.REVERSE);     // are ALL CAPS required?
+        leftDriveMotor.setDirection(DcMotor.Direction.REVERSE);    // are ALL CAPS required?
         rightDriveMotor.setDirection(DcMotor.Direction.FORWARD);
         spinnerMotor.setDirection(DcMotor.Direction.FORWARD);
         //
         // SET ALL MOTORS TO DESIRED STARTING STATUS
-        robotStop();                                                // use method call to set all DC motors to STOP
-        gripperServo.setPosition(100);                              // set SERVO motor to desired address
-        //
-        //
-        // END OF PREPARATIONS
-        //
-        // WAIT for driver to press PLAY
-        waitForStart();
+        stopRobot();                                               // use method call to set all DC motors to STOP
+        gripperServo.setPosition(GRIPPER_RESET_ADDRESS);           // set SERVO motor to desired address
         //
         ///////////////////////////////////////////////////////////////
-        // AFTER driver presses PLAY, execute code below this line
+        // END OF PREPARATIONS
+        ///////////////////////////////////////////////////////////////
+        //
+        ///////////////////////////////////////////////////////////////
+        // WAIT for driver to press PLAY
+        ///////////////////////////////////////////////////////////////
+        waitForStart();                                           // AFTER driver presses PLAY, execute code below this line
+        ///////////////////////////////////////////////////////////////
+        // START of AUTONOMOUS code 
         ///////////////////////////////////////////////////////////////
         //
         // Drive to Cap Ball, then stop
-        driveForward(DriveTimeToCapBall,DrivePowerFast);    // arguments MUST be in order expected by method
-        robotStop();                                        // stop allows Cap Ball to bounce/flex before rogbot moves again
+        driveForward(DRIVE_TIME_TO_CAP_BALL,DRIVE_POWER_FAST);    // arguments MUST be in order expected by method
+        stopRobot();                                        // stop allows Cap Ball to bounce/flex before rogbot moves again
         //
         // Pivot left to nudge Cap Ball off center vortex base, then stop
-        pivotLeft(DriveTime45DegTurn,DrivePowerMedium);
-        robotStop();                                        // stop allows Cap Ball to bounce/flex before rogbot moves again
+        pivotLeft(DRIVE_TIME_45_DEG_PIVOT,DRIVE_POWER_MEDIUM);
+        stopRobot();                                        // stop allows Cap Ball to bounce/flex before rogbot moves again
         //
         // Pivot right to prepare to park on center vortex base
-        pivotRight(DriveTime45DegTurn,DrivePowerMedium);
+        pivotRight(DRIVE_TIME_45_DEG_PIVOT,DRIVE_POWER_MEDIUM);
         //
         // Drive forward onto center vortex base, then stop
-        driveForward(DriveTimeCapBallToBase,DrivePowerSlow);    
-        robotStop();                                        // final stop until beginning of Teleop
+        driveForward(DRIVE_TIME_CAP_BALL_TO_BASE,DRIVE_POWER_SLOW);    
+        stopRobot();                                        // final stop until beginning of Teleop
         //
-        // If any parts of robot need to be repositioned (arms, etc.) to prepare for Teleop,
+        // If any parts of robot need to be repositioned (arms, grippers, etc.) to prepare for Teleop,
         //   place that code here before next "}" character
     }
     ///////////////////////////////////////////////////////////////
     // END of AUTONOMOUS code 
     ///////////////////////////////////////////////////////////////
     //
+    ///////////////////////////////////////////////////////////////
+    // START of METHODS
+    ///////////////////////////////////////////////////////////////
     // DEFINE ALL METHODS
     //   Methods are small sections of code that are written once but can be used ("called")
     //   by the program multiple times. A method can have all of its values set internally (see robotStop, below)
     //   or use values passed to it each time the program calls the method (see driveForward, below). Variables allow the
     //   method's code to be written once but adapt to different situations in the section of code that is calling it.
     //
-    // robotStop()
-    // stop all motors at current location by setting all power to zero
-    public void robotStop(){                                // the empty "()" section means that this method
+    // stopRobot()
+    // stop all motors at current location by setting all power to zero (0)
+    public void stopRobot(){                                // the empty "()" section means that this method
         leftDriveMotor.setPower(0);                         //   does not rely on variables
         rightDriveMotor.setPower(0);
         spinnerMotor.setPower(0);
@@ -137,4 +146,7 @@ public class Derry1_Auton_OpMode_Linear_v01 extends LinearOpMode {
         rightDriveMotor.setPower(Power);
         sleep((long) Time);
     }
+    ///////////////////////////////////////////////////////////////
+    // END of METHODS
+    ///////////////////////////////////////////////////////////////
 }
