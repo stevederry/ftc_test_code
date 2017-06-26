@@ -58,10 +58,10 @@ public class TemplateAUTON extends LinearOpMode {
     //   static means there is only one copy no matter how many instances of the class you create
     //
     // Drive times: all values are in milliseconds
-    public static final double DRIVE_TIME_TO_CAP_BALL = 10000;        
-    public static final double DRIVE_TIME_TO_CAP_BALL_TO_BASE = 2000;
-    public static final double DRIVE_TIME_45_DEG_TURN = 500;
-    public static final double DRIVE_TIME_90_DEG_TURN = DRIVE_TIME_45_DEG_TURN * 2;
+    public static final long DRIVE_TIME_TO_CAP_BALL = 10000;
+    public static final long DRIVE_TIME_TO_CAP_BALL_TO_BASE = 2000;
+    public static final long DRIVE_TIME_45_DEG_TURN = 500;
+    public static final long DRIVE_TIME_90_DEG_TURN = DRIVE_TIME_45_DEG_TURN * 2;
     //
     // Drive speeds: all values use range of 0 to 1
     public static final double DRIVE_POWER_FAST = .8;
@@ -186,13 +186,13 @@ public class TemplateAUTON extends LinearOpMode {
     }
     //
     // METHOD spinLeft(Time,Power)
-    public void spinLeft(double Time, double Power){        // The variable names Time and Power will be assigned
+    public void spinLeft(long Time, double Power){        // The variable names Time and Power will be assigned
                                                             //   to the values passed into the method, in the order
                                                             //   they are received
         leftDriveMotor.setPower(-Power);                    // Run motor with passed Power value inverted
                                                             //   so motor will spin in reverse
         rightDriveMotor.setPower(Power);                    // Run motor with passed Power value
-        sleep((long) Time);                                 // Wait here in code for duration of passed Time value,
+        sleep(Time);                                 // Wait here in code for duration of passed Time value,
                                                             //   (allows motors to run for duration of Time)
     }
 }
