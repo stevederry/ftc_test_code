@@ -31,13 +31,12 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;   // NOTE: This is needed in addition to the
                                                         //      line above because the workings of
-                                                        //      the REVERSE setting (line 91 below)
+                                                        //      the REVERSE setting (below)
                                                         //      are stored in DcMotorSimple
 //
 // DEFINE OpMode
 // @type(name = "name_of_this_program"*)
-@TeleOp(name="TeleopExample")               // name does not have to match filename, but should
-                                            //      make sense and be related
+@TeleOp(name="TeleopExample")
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // END OF PREPARATIONS
@@ -65,7 +64,7 @@ public class TeleopExample extends OpMode { // public means this CLASS can be
     // BEGIN INIT METHOD
     //////////////////////////////////////////////////////////////////////////////////////////////
     //
-    //      Init code runs once in reparation for remaining code, below (a LOOP in this file)
+    //      INIT code runs once in preparation for remaining code, below (a LOOP in this file)
     @Override                               // @override means that you're about to
                                             //      use a METHOD defined elsewhere -- in this
                                             //      case INIT() -- and you want any valid things
