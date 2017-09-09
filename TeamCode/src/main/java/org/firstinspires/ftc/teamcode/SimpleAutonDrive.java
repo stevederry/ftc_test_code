@@ -23,6 +23,12 @@ public class SimpleAutonDrive extends OpMode {
     public static final double RAMP_TIME = 2.0;     // how long to ramp up or down
     public static final double DRIVE_TIME = 1.0;    // how long to drive at constant speed
                                                     //   between ramp up and ramp down
+
+
+    private final static int state_start = 0;
+    private final static int state_go = 10;
+
+
     // *********************************************************
     // calculated from above constants, DON'T modify
     //   end ramp up at end of ramp time
