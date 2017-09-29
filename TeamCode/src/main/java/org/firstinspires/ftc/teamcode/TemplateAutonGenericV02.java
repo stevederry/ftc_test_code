@@ -5,10 +5,10 @@
 // Code Type:   OpMode for AUTONOMOUS
 // Description: Brief description of what this code does, such as
 //              1. Start at predetermined location (positioned by drivers prior to game start)
-//              2. Drive forward to object, then pause to let object flex/bounce/roll
-//              3. Spin left to push object off its original position, then pause to let object flex/bounce/roll
-//              4. Spin right to prepare to park on object's oroginal location
-//              5. Drive forward onto  object's oroginal location, then stop
+//              2. Drive forward to make contact with game object, then pause to let object flex/bounce/roll/slide
+//              3. Spin left to push object off its original position, then pause to let object flex/bounce/roll/slide
+//              4. Spin right to return to original orientation and prepare to park on object's oroginal location
+//              5. Drive forward onto object's oroginal location, then stop
 //              6. If any parts of robot need to be repositioned (arms, etc.) to prepare for Teleop,
 //                 place that code after step 5 and before next "}" character
 //              7. Wait for Teleop
@@ -26,21 +26,18 @@ import com.qualcomm.robotcore.hardware.Servo;
 // Utilities (specific)
 import com.qualcomm.robotcore.util.ElapsedTime;
 // 
-// DEFINE OpMode            ?????????? In this context, is OpMode the proper term for this program?
+// DEFINE OpMode
 // @type(name,group) 
-@Autonomous(name="TemplateAUTON.java", group="Derry_FTC_Templates")  // ?????????? Why does this line not use a ";" at end?
-                                                                     // ?????????? How and where does the value for "group" get used?
+@Autonomous(name="TemplateAUTON.java", group="Derry_FTC_Templates")  
 //
 // DEFINE Class
-// access level, class name, name of class this new class extends
+// access level, class name, name of class this new class extends (if any)
 public class TemplateAUTON extends LinearOpMode {
     //
     // DECLARE OpMode MEMBERS
     //   Utilities
     //   access level, utility name, starting value
-    private ElapsedTime runtime = new ElapsedTime();        // Use private unless you need access
-                                                            //   from other classes. Try to be explicit
-                                                            //   ?????????? What does being explcit mean in this context?
+    private ElapsedTime runtime = new ElapsedTime();        // Use private unless you need access from other classes.
     //
     //   Hardware
     //   hardware type, specific name of hardware, starting value
@@ -55,8 +52,9 @@ public class TemplateAUTON extends LinearOpMode {
     //
     // DEFINE CODE CONSTANTS, VARIABLES, AND BEGINNING VALUES
     //   public means it can be accessed from other classes
-    //   final means its value never changes (constant)
     //   static means there is only one copy no matter how many instances of the class you create
+    //   final means its value never changes (constant)
+    //   long is the type of value held by the variable
     //
     // Drive times: all values are in milliseconds
     public static final long DRIVE_TIME_TO_CAP_BALL = 10000;
@@ -64,7 +62,7 @@ public class TemplateAUTON extends LinearOpMode {
     public static final long DRIVE_TIME_45_DEG_TURN = 500;
     public static final long DRIVE_TIME_90_DEG_TURN = DRIVE_TIME_45_DEG_TURN * 2;
     //
-    // Drive speeds: all values use range of 0 to 1
+    // Drive powers (speeds): all values use range of 0 to 1
     public static final double DRIVE_POWER_FAST = .8;
     public static final double DRIVE_POWER_MEDIUM = .5;
     public static final double DRIVE_POWER_SLOW = .2;
@@ -97,8 +95,8 @@ public class TemplateAUTON extends LinearOpMode {
         // SET MOTOR DIRECTIONS
         // "Reverse" any motor that runs backwards (relative to robot) when powered by positive value
         // hardware name.setDirection(DcMotor.Direction.DIRECTION)
-        leftDriveMotor.setDirection(DcMotor.Direction.REVERSE);     // ?????????? are ALL CAPS required?
-        rightDriveMotor.setDirection(DcMotor.Direction.FORWARD);    // ?????????? are these ALL CAPS items constants?
+        leftDriveMotor.setDirection(DcMotor.Direction.REVERSE);     
+        rightDriveMotor.setDirection(DcMotor.Direction.FORWARD);    
         sweeperMotor.setDirection(DcMotor.Direction.FORWARD);       // assumes sweeperMotor is same orientation as rightDriveMotor
         //
         // SET ALL MOTORS TO DESIRED STARTING STATUS
@@ -111,8 +109,7 @@ public class TemplateAUTON extends LinearOpMode {
         //
         // WAIT for driver to press PLAY
         waitForStart();                                     // The waitForStart() method is part of the LinearOpMode class,
-                                                            //   which is defined elsewhere
-                                                            //   ?????????? Where is LinearOpMode class defined?
+                                                            //   which is defined elsewhere in the FTC resrouce code
         //
         ///////////////////////////////////////////////////////////////
         // AFTER driver presses PLAY, execute code below this line
