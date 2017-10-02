@@ -32,7 +32,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 //
 // DEFINE Class
 // access level, class name, name of class this new class extends (if any)
-public class TemplateAUTON extends LinearOpMode {
+public class TemplateAutonGenericV02 extends LinearOpMode {
     //
     // DECLARE OpMode MEMBERS
     //   Utilities
