@@ -28,7 +28,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 // 
 // DEFINE OpMode
 // @type(name,group) 
-@Autonomous(name="TemplateAUTON.java", group="Derry_FTC_Templates")  
+@Autonomous(name="TemplateAutonGenericV02", group="Derry_FTC_Templates")  
 //
 // DEFINE Class
 // access level, class name, name of class this new class extends (if any)
