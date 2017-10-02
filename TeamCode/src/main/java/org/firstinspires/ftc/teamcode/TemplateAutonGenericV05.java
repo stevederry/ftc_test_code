@@ -13,6 +13,7 @@
 //                 place that code after step 5 and before next "}" character
 //              7. Wait for Teleop
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
 // DEFINE CODE PACKAGE
 package org.firstinspires.ftc.teamcode;
 //
@@ -79,23 +80,23 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
     // call runOpMode() method from the parent class of LinearOpMode
     public void runOpMode() throws InterruptedException  {              // "interrupted exception" keeps the program 
                                                                         //    from freezing completely if there is an error
+                                                                        //    that it does not know how to handle
         // display status and OpMode name on controller phone
         telemetry.addData("Status", "Initialized", "name");             // specific info to send to controller phone
         telemetry.update();                                             // send info now
         //
         // INITIALIZE HARDWARE VARIABLES
-        // FORMAT: hardware name to be used by code, hardware designation in hardwaremap
-        // Values after 'get' MUST match EXACTLY the names used when the
-        //   robot configuration was built using the FTC Robot Controler app
-        //   on the robot controller phone
-        //   hardware variable name = location within hardware map (" value as defined in hardware map ");
+        // FORMAT: hardware variable name = location within hardware map (" value as defined in hardware map ");
+        //   Values after 'get' MUST match EXACTLY the names used when the
+        //      robot configuration was built using the FTC Robot Controler app
+        //      on the robot controller phone.
         leftDriveMotor = hardwareMap.dcMotor.get("leftDriveMotor");
         rightDriveMotor = hardwareMap.dcMotor.get("rightDriveMotor");
         sweeperMotor = hardwareMap.dcMotor.get("sweeperMotor");
         gripperServo = hardwareMap.servo.get("gripperServo");
         //
         // SET MOTOR DIRECTIONS
-        // "Reverse" any motor that runs backwards (relative to robot) when powered by positive value
+        // "Reverse" any motor that runs backwards (relative to "forward" direction of robot) when powered by positive value
         // hardware name.setDirection(DcMotor.Direction.DIRECTION)
         leftDriveMotor.setDirection(DcMotor.Direction.REVERSE);     
         rightDriveMotor.setDirection(DcMotor.Direction.FORWARD);    
@@ -103,6 +104,13 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
         //
         // SET ALL MOTORS TO DESIRED STARTING STATUS
         stopRobot();                        // Use method call to set all DC motors to STOP (power value = 0)
+                                            // Methods are defined in one of two places:
+                                            //   1. In separate files that are part of your overall group of code
+                                            //      files, such as runOpMode(), as used above. The runOpMode method
+                                            //      is in a file supplied by FTC. You can write your own separate files
+                                            //      that contain methods, as well.
+                                            //   2. Inside this file, in the DEFINE ALL METHODS section, below.
+        //
         gripperServo.setPosition(100);      // Set SERVO motor to desired address (100 is just an example; value depends on robot)
         //
         ///////////////////////////////////////////////////////////////
@@ -110,8 +118,8 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
         ///////////////////////////////////////////////////////////////
         //
         // WAIT for driver to press PLAY
-        waitForStart();                                     // The waitForStart() method is part of the LinearOpMode class,
-                                                            //   which is defined elsewhere in the FTC resrouce code
+        waitForStart();                     // The waitForStart() method is part of the LinearOpMode class,
+                                            //   which is defined elsewhere in the FTC resrouce code
         //
         ///////////////////////////////////////////////////////////////
         // AFTER driver presses PLAY, execute code below this line
@@ -183,13 +191,13 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
     }
     //
     // METHOD spinLeft(Time,Power)
-    public void spinLeft(long Time, double Power){        // The variable names Time and Power will be assigned
+    public void spinLeft(long Time, double Power){          // The variable names Time and Power will be assigned
                                                             //   to the values passed into the method, in the order
                                                             //   they are received
         leftDriveMotor.setPower(-Power);                    // Run motor with passed Power value inverted
                                                             //   so motor will spin in reverse
         rightDriveMotor.setPower(Power);                    // Run motor with passed Power value
-        sleep(Time);                                 // Wait here in code for duration of passed Time value,
+        sleep(Time);                                        // Wait here in code for duration of passed Time value,
                                                             //   (allows motors to run for duration of Time)
     }
 }
