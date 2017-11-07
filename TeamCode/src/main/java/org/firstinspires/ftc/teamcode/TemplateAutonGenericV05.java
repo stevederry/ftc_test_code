@@ -63,7 +63,7 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
     //
     // Drive times: all values are in milliseconds
     public static final long DRIVE_TIME_TO_OBJECT = 10000;
-    public static final long DRIVE_TIME_TO_OBJECT_TO_BASE = 2000;
+    public static final long DRIVE_TIME_OBJECT_TO_BASE = 2000;
     public static final long DRIVE_TIME_45_DEG_TURN = 500;
     public static final long DRIVE_TIME_90_DEG_TURN = DRIVE_TIME_45_DEG_TURN * 2;
     //
@@ -128,20 +128,20 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
         // 1. Start at predetermined location (positioned by drivers prior to game start)
         //
         // 2. Drive forward to make contact with game object, then pause to let object flex/bounce/roll/slide
-        driveForward(DRIVE_TIME_TO_OBJECT,DRIVE_POWER_FAST);    // Arguments MUST be in order expected by method
+        driveForward(DRIVE_TIME_TO_OBJECT,DRIVE_POWER_FAST);// Arguments MUST be in order expected by method
         stopRobot();                                        // Stop then sleep allows Object to bounce/flex before rogbot moves again        
         sleep((long) 2);                                    // 2 seconds
         //
         // 3. Spin left to push object off its base, then pause to let object flex/bounce/roll
-        spinLeft(DRIVE_TIME_45_DEG_TURN,DRIVE_POWER_MEDIUM);      // Spin 45 deg. to left
+        spinLeft(DRIVE_TIME_45_DEG_TURN,DRIVE_POWER_MEDIUM);// Spin 45 deg. to left
         stopRobot();                                        // Stop then sleep allows Object to bounce/flex before rogbot moves again        
         sleep((long) 2);                                    // 2 seconds
         //
         // 4. Spin right to prepare to park on base
-        spinRight(DRIVE_TIME_45_DEG_TURN,DRIVE_POWER_MEDIUM);     // Spin 45 deg. to right to return to original orientation
+        spinRight(DRIVE_TIME_45_DEG_TURN,DRIVE_POWER_MEDIUM);// Spin 45 deg. to right to return to original orientation
         //
         // 5. Drive forward onto base, then stop
-        driveForward(DRIVE_TIME_TO_OBJECT_TO_BASE,DRIVE_POWER_SLOW);    
+        driveForward(DRIVE_TIME_OBJECT_TO_BASE,DRIVE_POWER_SLOW);    
         stopRobot();                                        // Final stop until beginning of Teleop
         //
         // 6. If any parts of robot need to be repositioned (arms, etc.) to prepare for Teleop,
@@ -185,7 +185,7 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
                                                             //   they are received
         leftDriveMotor.setPower(Power);                     // Run motor with passed Power value
         rightDriveMotor.setPower(-Power);                   // Run motor with passed Power value inverted
-                                                            //   so motor will spin in reverse
+                                                            //   so motor will rotate in reverse
         sleep((long) Time);                                 // Wait here in code for duration of passed Time value,
                                                             //   (allows motors to run for duration of Time)
     }
@@ -195,7 +195,7 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
                                                             //   to the values passed into the method, in the order
                                                             //   they are received
         leftDriveMotor.setPower(-Power);                    // Run motor with passed Power value inverted
-                                                            //   so motor will spin in reverse
+                                                            //   so motor will rotate in reverse
         rightDriveMotor.setPower(Power);                    // Run motor with passed Power value
         sleep(Time);                                        // Wait here in code for duration of passed Time value,
                                                             //   (allows motors to run for duration of Time)
