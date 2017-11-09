@@ -1,17 +1,21 @@
 
 ////////////////////////////////// THIS FILE TO BECOME TEACHING TEMPLATE ////////////////////////////////////////////
-// Team Name:   Name
-// Team Number: FTCNumber
+// Team Name:   Lightning Robotics
+// Team Number: FRC862
 // Code Type:   OpMode for AUTONOMOUS
-// Description: Brief description of what this code does, such as
-//              1. Start at predetermined location (positioned by drivers prior to game start)
-//              2. Drive forward to make contact with game object, then pause to let object flex/bounce/roll/slide
-//              3. Spin left to push object off its original position, then pause to let object flex/bounce/roll/slide
-//              4. Spin right to return to original orientation and prepare to park on object's original location
-//              5. Drive forward onto object's original location, then stop
-//              6. If any parts of robot need to be repositioned (arms, etc.) to prepare for Teleop,
-//                 place that code after step 5 and before next "}" character
-//              7. Wait for Teleop
+// Description: This code is for the 2017-18 FTC Relic Recovery game.
+//              See game description video here for clarification: https://www.youtube.com/watch?v=7Wc1LhG2FEs&t=9s
+//              1.  Start at predetermined location (positioned by drivers prior to game start) with robot
+//                  facing toward Crypto Box
+//              2.  Deploy Color Senor Arm
+//              3.  Compare sensed color to alliance color
+//              4.  Drive robot toward unwanted color to move unwanted object, stop, stow Color Senor Arm
+//              5.  If Step 4 drove robot backward (away from crypto box), drive robot back to starting point
+//              6.  Drive forward toward Crypto Box, stop
+//              7.  Pivot to right, toward Crypto Box, stop
+//              6.  Drive forward toward Crypto Box, stop
+//              7.  Release gripper to drop glyph (hopefully in cryptobox)
+//              8.  Wait for AUTON to end and TELEOP to begin
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // DEFINE CODE PACKAGE
@@ -35,7 +39,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 //
 // DEFINE Class
 // FORMAT: access level, class name, name of class this new class extends (if any)
-public class TemplateAutonGenericV05 extends LinearOpMode {
+public class RRGameAutonV01 extends LinearOpMode {
     //
     // DECLARE OpMode MEMBERS
     //   Utilities
@@ -46,9 +50,9 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
     //   FORMAT: hardware type, specific name of hardware, starting value
     DcMotor leftDriveMotor = null;                          // One line for each hardware item
     DcMotor rightDriveMotor = null;                         // Values before '=' MUST match EXACTLY the names used when the
-    DcMotor sweeperMotor = null;                            //   robot configuration was built using the FTC Robot Controler app
+    Servo colorSensorArmServo = null;                       //   robot configuration was built using the FTC Robot Controler app
     Servo gripperServo= null;                               //   on the robot controller phone
-    Servo sweeperServo= null;                               
+    ColorSensor colorSensor= null;                               
     //
     //   Constants should generally be defined outside of
     //     method bodies (here) instead of below (inside runOpMode()),
@@ -62,8 +66,8 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
     //   long is the type of value held by the variable
     //
     // Drive times: all values are in milliseconds
-    public static final long DRIVE_TIME_TO_OBJECT = 10000;
-    public static final long DRIVE_TIME_OBJECT_TO_BASE = 2000;
+    public static final long DRIVE_TIME_TO_MOVE_JEWEL = 10000;
+    public static final long DRIVE_TIME_START_TO_SAFE_ZONE = 3000;
     public static final long DRIVE_TIME_45_DEG_TURN = 500;
     public static final long DRIVE_TIME_90_DEG_TURN = DRIVE_TIME_45_DEG_TURN * 2;
     //
@@ -71,6 +75,16 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
     public static final double DRIVE_POWER_FAST = .8;
     public static final double DRIVE_POWER_MEDIUM = .5;
     public static final double DRIVE_POWER_SLOW = .2;
+    //
+    // Servo addresses (locations)
+    public static final double COLOR_SENSOR_ARM_STOWED = 0;
+    public static final double COLOR_SENSOR_ARM_DEPLOYED = 0;
+    public static final double GRIPPER_OPEN = 0;
+    public static final double GRIPPER_GRIP_GLYPH = 180;
+    //
+    // Sensor values
+    public static final double ALLIANCE_COLOR = BLUE;            // "BLUE" is not a real value. NEED VALUES OF RED AND BLUE
+    public static double SensedColor = null;                   // Null will be replaced by sensed value during execution
     //
     @Override
     // Override is a note to the compiler, that you expect that you are replacing a method
@@ -92,7 +106,7 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
         //      on the robot controller phone.
         leftDriveMotor = hardwareMap.dcMotor.get("leftDriveMotor");
         rightDriveMotor = hardwareMap.dcMotor.get("rightDriveMotor");
-        sweeperMotor = hardwareMap.dcMotor.get("sweeperMotor");
+        colorSensorArmServo = hardwareMap.dcMotor.get("colorSensorArmServo");
         gripperServo = hardwareMap.servo.get("gripperServo");
         //
         // SET MOTOR DIRECTIONS
@@ -100,7 +114,6 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
         // hardware name.setDirection(DcMotor.Direction.DIRECTION)
         leftDriveMotor.setDirection(DcMotor.Direction.REVERSE);     
         rightDriveMotor.setDirection(DcMotor.Direction.FORWARD);    
-        sweeperMotor.setDirection(DcMotor.Direction.FORWARD);       // assumes sweeperMotor is same orientation as rightDriveMotor
         //
         // SET ALL MOTORS TO DESIRED STARTING STATUS
         stopRobot();                        // Use method call to set all DC motors to STOP (power value = 0)
@@ -110,8 +123,9 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
                                             //      is in a file supplied by FTC. You can write your own separate files
                                             //      that contain methods, as well.
                                             //   2. Inside this file, in the DEFINE ALL METHODS section, below.
-        //
-        gripperServo.setPosition(100);      // Set SERVO motor to desired address (100 is just an example; value depends on robot)
+        // SET ALL SERVOS TO DESIRED STARTING STATUS
+        gripperServo.setPosition(GRIPPER_GRIP_GLYPH);              
+        colorSensorArmServo.setPosition(COLOR_SENSOR_ARM_STOWED);
         //
         ///////////////////////////////////////////////////////////////
         // END OF PREPARATIONS
@@ -125,9 +139,37 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
         // AFTER driver presses PLAY, execute code below this line
         ///////////////////////////////////////////////////////////////
         //
-        // 1. Start at predetermined location (positioned by drivers prior to game start)
-        //
-        // 2. Drive forward to make contact with game object, then pause to let object flex/bounce/roll/slide
+        //  1.  Start at predetermined location (positioned by drivers prior to game start) with robot
+        //      facing toward Crypto Box
+        //  2.  Deploy Color Senor Arm
+        colorSensorArmServo.setPosition(COLOR_SENSOR_ARM_DEPLOYED);
+        //  3.  Compare sensed color to desired color. (Color sensor faces rearward)
+        SensedColor = colorSensor.getValue();
+        If Sensed Color == ALLIANCE_COLOR           
+        {
+            DirectionToOpponentJewel = "forward";
+        else
+            DirectionToOpponentJewel = "backward";
+        }
+        //  4.  Drive robot toward unwanted color to move unwanted object, stop, stow Color Senor Arm
+        
+       
+        //  5.  If Step 4 drove robot backward (away from crypto box), drive robot back to starting point
+        //  6.  Drive forward toward Crypto Box, stop
+        //  7.  Pivot to right, toward Crypto Box, stop
+        //  6.  Drive forward toward Crypto Box, stop
+        //  7.  Release gripper to drop glyph (hopefully in cryptobox)
+        //  8.  Wait for AUTON to end and TELEOP to begin
+        //??????????????????????
+        
+        
+        
+        
+        
+        
+        
+        
+        
         driveForward(DRIVE_TIME_TO_OBJECT,DRIVE_POWER_FAST);// Arguments MUST be in order expected by method
         stopRobot();                                        // Stop then sleep allows Object to bounce/flex before rogbot moves again        
         sleep((long) 2);                                    // 2 seconds
