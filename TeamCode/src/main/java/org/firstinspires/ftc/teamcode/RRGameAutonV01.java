@@ -67,7 +67,7 @@ public class RRGameAutonV01 extends LinearOpMode {
     //
     // Drive times: all values are in milliseconds
     public static final long DRIVE_TIME_TO_MOVE_JEWEL = 10000;
-    public static final long DRIVE_TIME_START_TO_SAFE_ZONE = 3000;
+    public static final long DRIVE_TIME_FWD_JEWEL_TO_SAFE_ZONE = 3000;
     public static final long DRIVE_TIME_45_DEG_TURN = 500;
     public static final long DRIVE_TIME_90_DEG_TURN = DRIVE_TIME_45_DEG_TURN * 2;
     //
@@ -144,18 +144,25 @@ public class RRGameAutonV01 extends LinearOpMode {
         //  2.  Deploy Color Senor Arm
         colorSensorArmServo.setPosition(COLOR_SENSOR_ARM_DEPLOYED);
         //  3.  Compare sensed color to desired color. (Color sensor faces rearward)
+        //  4.  Drive robot toward unwanted color to move unwanted object, stop, stow Color Senor Arm
+        //  5.  If Step 4 drove robot backward (away from crypto box), drive robot back to starting point
+
         SensedColor = colorSensor.getValue();
         If Sensed Color == ALLIANCE_COLOR           
         {
-            DirectionToOpponentJewel = "forward";
+            driveForward(DRIVE_TIME_TO_MOVE_JEWEL,DRIVE_POWER_MEDIUM);  // Arguments MUST be in order expected by method
+            stopRobot();          
+            colorSensorArmServo.setPosition(COLOR_SENSOR_ARM_STOWED);   // Stow color sensor arm
         else
-            DirectionToOpponentJewel = "backward";
-        }
-        //  4.  Drive robot toward unwanted color to move unwanted object, stop, stow Color Senor Arm
-        
-       
-        //  5.  If Step 4 drove robot backward (away from crypto box), drive robot back to starting point
+            driveRearward(DRIVE_TIME_TO_MOVE_JEWEL,DRIVE_POWER_MEDIUM); // Arguments MUST be in order expected by method
+            stopRobot();          
+            colorSensorArmServo.setPosition(COLOR_SENSOR_ARM_STOWED);   // Stow color sensor arm
+            driveForeward(DRIVE_TIME_TO_MOVE_JEWEL * 2,DRIVE_POWER_MEDIUM); // Moves robot to end position of forward drive
+            stopRobot();                                             
+        } 
         //  6.  Drive forward toward Crypto Box, stop
+        driveForward(DRIVE_TIME_FWD_JEWEL_TO_SAFE_ZONE,DRIVE_POWER_FAST);
+        stopRobot();                                             
         //  7.  Pivot to right, toward Crypto Box, stop
         //  6.  Drive forward toward Crypto Box, stop
         //  7.  Release gripper to drop glyph (hopefully in cryptobox)
@@ -170,7 +177,7 @@ public class RRGameAutonV01 extends LinearOpMode {
         
         
         
-        driveForward(DRIVE_TIME_TO_OBJECT,DRIVE_POWER_FAST);// Arguments MUST be in order expected by method
+        driveForward(DRIVE_TIME_TO_MOVE_JEWEL,DRIVE_POWER_MEDIUM);  // Arguments MUST be in order expected by method
         stopRobot();                                        // Stop then sleep allows Object to bounce/flex before rogbot moves again        
         sleep((long) 2);                                    // 2 seconds
         //
@@ -208,7 +215,6 @@ public class RRGameAutonV01 extends LinearOpMode {
     public void stopRobot(){                                // The empty "()" section means that this method
         leftDriveMotor.setPower(0);                         //   does not rely on values passed into it
         rightDriveMotor.setPower(0);                        //   from the section of code that calls it
-        sweeperMotor.setPower(0);                           //   and uses the values entered directly here (0 in this case)
     }
     //
     // METHOD driveForward(Time,Power)
@@ -217,6 +223,17 @@ public class RRGameAutonV01 extends LinearOpMode {
                                                             //   they are received
         leftDriveMotor.setPower(Power);                     // Run motor with passed Power value
         rightDriveMotor.setPower(Power);                    // Run motor with passed Power value
+        sleep((long) Time);                                 // Wait here in code for duration of passed Time value,
+                                                            //   (allows motors to turn for duration of Time)
+    }
+    //
+    // METHOD driveRearward(Time,Power)
+    public void driveRearward(double Time, double Power){   // The variable names Time and Power will be assigned
+                                                            //   to the values passed into the method, in the order
+                                                            //   they are received
+        leftDriveMotor.setPower(-Power);                    // Run both motors with passed Power value inverted
+                                                            //   with passed Power value inverted
+        rightDriveMotor.setPower(-Power);                   //   so motors will rotate in reverse
         sleep((long) Time);                                 // Wait here in code for duration of passed Time value,
                                                             //   (allows motors to turn for duration of Time)
     }
@@ -239,7 +256,7 @@ public class RRGameAutonV01 extends LinearOpMode {
         leftDriveMotor.setPower(-Power);                    // Run motor with passed Power value inverted
                                                             //   so motor will rotate in reverse
         rightDriveMotor.setPower(Power);                    // Run motor with passed Power value
-        sleep(Time);                                        // Wait here in code for duration of passed Time value,
+        sleep((long) Time);                                 // Wait here in code for duration of passed Time value,
                                                             //   (allows motors to run for duration of Time)
     }
 }
