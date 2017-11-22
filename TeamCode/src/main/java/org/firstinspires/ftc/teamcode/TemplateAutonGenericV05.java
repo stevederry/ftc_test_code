@@ -3,14 +3,13 @@
 // Team Name:   Name
 // Team Number: FTCNumber
 // Code Type:   OpMode for AUTONOMOUS
-// Description: Brief description of what this code does, such as
+// Description: Brief description of what this code does, such as:
 //              1. Start at predetermined location (positioned by drivers prior to game start)
 //              2. Drive forward to make contact with game object, then pause to let object flex/bounce/roll/slide
 //              3. Spin left to push object off its original position, then pause to let object flex/bounce/roll/slide
 //              4. Spin right to return to original orientation and prepare to park on object's original location
 //              5. Drive forward onto object's original location, then stop
-//              6. If any parts of robot need to be repositioned (arms, etc.) to prepare for Teleop,
-//                 place that code after step 5 and before next "}" character
+//              6. Set gripper to open position
 //              7. Wait for Teleop
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -72,9 +71,13 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
     public static final double DRIVE_POWER_MEDIUM = .5;
     public static final double DRIVE_POWER_SLOW = .2;
     //
-    // Start/Safe/Reset/Rest position values for servos
-    public static final double GRIPPER_SERVO_START_POS = 75;
-    public static final double GRIPPER_SERVO_REST_POS = 100;
+    // Position address values for servos
+    public static final double GRIPPER_SERVO_START = 10;                // Open and stowed to fit inside 18" sizing cube
+    public static final double GRIPPER_SERVO_REST = 50;                 // Open wide enough to be fully clear of all moving items
+    public static final double GRIPPER_SERVO_OPEN = 100;                // Open to receive game elements
+    public static final double GRIPPER_SERVO_GRIP_LG = 150;             // Closed to grip large game elements
+    public static final double GRIPPER_SERVO_GRIP_SM = 200;             // Closed to grip small game elements
+    public static final double GRIPPER_SERVO_CLOSED = 250;              // Closed completely
     //
     @Override
     // Override is a note to the compiler, that you expect that you are replacing a method
@@ -82,12 +85,12 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
     //   the method signature you will get an error.
     //
     // call runOpMode() method from the parent class of LinearOpMode
-    public void runOpMode() throws InterruptedException  {              // "interrupted exception" keeps the program 
+    public void runOpMode() throws InterruptedException  {              // "Interrupted exception" keeps the program 
                                                                         //    from freezing completely if there is an error
                                                                         //    that it does not know how to handle
         // display status and OpMode name on controller phone
-        telemetry.addData("Status", "Initialized", "name");             // specific info to send to controller phone
-        telemetry.update();                                             // send info now
+        telemetry.addData("Status", "Initialized", "name");             // Specific info to send to controller phone
+        telemetry.update();                                             // Send info now
         //
         // INITIALIZE HARDWARE VARIABLES
         // FORMAT: hardware variable name = location within hardware map (" value as defined in hardware map ");
@@ -104,7 +107,7 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
         // hardware name.setDirection(DcMotor.Direction.DIRECTION)
         leftDriveMotor.setDirection(DcMotor.Direction.REVERSE);     
         rightDriveMotor.setDirection(DcMotor.Direction.FORWARD);    
-        sweeperMotor.setDirection(DcMotor.Direction.FORWARD);       // assumes sweeperMotor is same orientation as rightDriveMotor
+        sweeperMotor.setDirection(DcMotor.Direction.FORWARD);       // Assumes sweeperMotor is same orientation as rightDriveMotor
         //
         // SET ALL MOTORS TO DESIRED STARTING STATUS
         stopRobot();                        // Use method call to set all DC motors to STOP (power value = 0)
@@ -115,7 +118,7 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
                                             //      that contain methods, as well.
                                             //   2. Inside this file, in the DEFINE ALL METHODS section, below.
         //
-        gripperServo.setPosition(GRIPPER_SERVO_START_POS);      // Set SERVO motor to desired start position
+        gripperServo.setPosition(GRIPPER_SERVO_START);      // Set SERVO motor to desired start position
         //
         ///////////////////////////////////////////////////////////////
         // END OF PREPARATIONS
@@ -141,10 +144,10 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
         stopRobot();                                        // Stop then sleep allows Object to bounce/flex before rogbot moves again        
         sleep((long) 2);                                    // 2 seconds
         //
-        // 4. Spin right to prepare to park on base
+        // 4. Spin right to prepare to park on object's original location
         spinRight(DRIVE_TIME_45_DEG_TURN,DRIVE_POWER_MEDIUM);// Spin 45 deg. to right to return to original orientation
         //
-        // 5. Drive forward onto base, then stop
+        // 5. Drive forward onto object's original location, then stop
         driveForward(DRIVE_TIME_OBJECT_TO_BASE,DRIVE_POWER_SLOW);    
         stopRobot();                                        // Final stop until beginning of Teleop
         //
@@ -152,7 +155,8 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
         //    place that code here before next "}" character
         //
         // Open gripper hand
-        gripperServo.setPosition(200);      // Set SERVO motor to desired address (200 is just an example; value depends on robot)
+        gripperServo.setPosition(GRIPPER_SERVO_OPEN);
+        //
         // 7. Wait for Teleop
     }
     ///////////////////////////////////////////////////////////////
