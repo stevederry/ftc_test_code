@@ -50,8 +50,8 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
     Servo gripperServo= null;                               //   on the robot controller phone
     Servo sweeperServo= null;                               
     //
-    //   Constants should generally be defined outside of
-    //     method bodies (here) instead of below (inside runOpMode()),
+    //   Constants should generally be defined here (outside of METHOD bodies) 
+    //     instead of inside runOpMode() or any other METHOD,
     //     especially if you ever want to access them outside of this class
     //
     // DEFINE CODE CONSTANTS, VARIABLES, AND BEGINNING VALUES
@@ -59,7 +59,7 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
     //   public means it can be accessed from other classes
     //   static means there is only one copy no matter how many instances of the class you create
     //   final means its value never changes (constant)
-    //   long is the type of value held by the variable
+    //   long, double, etc. is the type of value held by the variable
     //
     // Drive times: all values are in milliseconds
     public static final long DRIVE_TIME_TO_OBJECT = 10000;
@@ -71,6 +71,10 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
     public static final double DRIVE_POWER_FAST = .8;
     public static final double DRIVE_POWER_MEDIUM = .5;
     public static final double DRIVE_POWER_SLOW = .2;
+    //
+    // Start/Safe/Reset/Rest position values for servos
+    public static final double GRIPPER_SERVO_START_POS = 75;
+    public static final double GRIPPER_SERVO_REST_POS = 100;
     //
     @Override
     // Override is a note to the compiler, that you expect that you are replacing a method
@@ -104,14 +108,14 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
         //
         // SET ALL MOTORS TO DESIRED STARTING STATUS
         stopRobot();                        // Use method call to set all DC motors to STOP (power value = 0)
-                                            // Methods are defined in one of two places:
+                                            // METHODS are defined in one of two places:
                                             //   1. In separate files that are part of your overall group of code
                                             //      files, such as runOpMode(), as used above. The runOpMode method
                                             //      is in a file supplied by FTC. You can write your own separate files
                                             //      that contain methods, as well.
                                             //   2. Inside this file, in the DEFINE ALL METHODS section, below.
         //
-        gripperServo.setPosition(100);      // Set SERVO motor to desired address (100 is just an example; value depends on robot)
+        gripperServo.setPosition(GRIPPER_SERVO_START_POS);      // Set SERVO motor to desired start position
         //
         ///////////////////////////////////////////////////////////////
         // END OF PREPARATIONS
