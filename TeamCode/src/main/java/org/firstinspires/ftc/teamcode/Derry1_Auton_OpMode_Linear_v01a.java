@@ -98,10 +98,10 @@ public class Derry1_Auton_OpMode_Linear_v01a extends LinearOpMode {
         // Drive forward onto center vortex base, then stop
         driveForward(DRIVE_TIME_CAP_BALL_TO_BASE,DRIVE_POWER_SLOW);    
         stopRobot();                                        // final stop until beginning of Teleop
-        gripperServo.setPosition(GRIPPER_RESET_ADDRESS);
         //
         // If any parts of robot need to be repositioned (arms, grippers, etc.) to prepare for Teleop,
         //   place that code here before next "}" character
+        gripperServo.setPosition(GRIPPER_RESET_ADDRESS);
     }
     ///////////////////////////////////////////////////////////////
     // END of AUTONOMOUS code 
