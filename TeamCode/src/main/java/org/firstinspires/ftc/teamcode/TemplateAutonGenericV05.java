@@ -49,16 +49,15 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
     Servo gripperServo= null;                               //   on the robot controller phone
     Servo sweeperServo= null;                               
     //
-    //   Constants should generally be defined here (outside of METHOD bodies) 
-    //     instead of inside runOpMode() or any other METHOD,
-    //     especially if you ever want to access them outside of this class
-    //
     // DEFINE CODE CONSTANTS, VARIABLES, AND BEGINNING VALUES
+    // NOTE: Constants should generally be defined here (outside of METHOD bodies) 
+    //   instead of inside runOpMode() or any other METHOD,
+    //     especially if you ever want to access them outside of this class
     // FORMAT: access level, static yes/no, constant yes/no, value type, value name, beginning value
-    //   public means it can be accessed from other classes
-    //   static means there is only one copy no matter how many instances of the class you create
-    //   final means its value never changes (constant)
-    //   long, double, etc. is the type of value held by the variable
+    //   - public means it can be accessed from other classes
+    //   - static means there is only one copy no matter how many instances of the class you create
+    //   - final means its value never changes (constant)
+    //   - long, double, etc. is the type of value held by the variable
     //
     // Drive times: all values are in milliseconds
     public static final long DRIVE_TIME_TO_OBJECT = 10000;
@@ -97,14 +96,16 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
         //   Values after 'get' MUST match EXACTLY the names used when the
         //      robot configuration was built using the FTC Robot Controler app
         //      on the robot controller phone.
+        //   In this code, the hardware variable names match the names of the corresponding item in the hardware map. This
+        //      is not required, but is recommended because it keeps communication cleear and usage consistent
         leftDriveMotor = hardwareMap.dcMotor.get("leftDriveMotor");
         rightDriveMotor = hardwareMap.dcMotor.get("rightDriveMotor");
         sweeperMotor = hardwareMap.dcMotor.get("sweeperMotor");
         gripperServo = hardwareMap.servo.get("gripperServo");
         //
-        // SET MOTOR DIRECTIONS
+        // SET DC MOTOR DIRECTIONS
         // "Reverse" any motor that runs backwards (relative to "forward" direction of robot) when powered by positive value
-        // hardware name.setDirection(DcMotor.Direction.DIRECTION)
+        // FORMAT: hardware_name.setDirection(DcMotor.Direction.DIRECTION)
         leftDriveMotor.setDirection(DcMotor.Direction.REVERSE);     
         rightDriveMotor.setDirection(DcMotor.Direction.FORWARD);    
         sweeperMotor.setDirection(DcMotor.Direction.FORWARD);       // Assumes sweeperMotor is same orientation as rightDriveMotor
@@ -119,6 +120,7 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
                                             //   2. Inside this file, in the DEFINE ALL METHODS section, below.
         //
         gripperServo.setPosition(GRIPPER_SERVO_START);      // Set SERVO motor to desired start position
+        //                                                       using variable defined above
         //
         ///////////////////////////////////////////////////////////////
         // END OF PREPARATIONS
