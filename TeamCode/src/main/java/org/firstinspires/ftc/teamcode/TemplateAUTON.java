@@ -1,4 +1,5 @@
 ////////////////////////////////// THIS FILE TO BECOME TEACHING TEMPLATE ////////////////////////////////////////////
+// Edit Date:   May 11, 2018
 // Team Name:   Name
 // Team Number: FTCNumber
 // Code Type:   AUTON or TELEOP
