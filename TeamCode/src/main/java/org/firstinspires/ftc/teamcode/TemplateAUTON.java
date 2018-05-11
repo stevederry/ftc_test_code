@@ -12,6 +12,7 @@
 //                 place that code after step 5 and before next "}" character
 //              7. Wait for Teleop
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
 // DEFINE CODE PACKAGE
 package org.firstinspires.ftc.teamcode;
 //
@@ -141,11 +142,14 @@ public class TemplateAUTON extends LinearOpMode {
         // Open gripper hand
         gripperServo.setPosition(200);      // Set SERVO motor to desired address (200 is just an example; value depends on robot)
         // 7. Wait for Teleop
-    }
+        }
     ///////////////////////////////////////////////////////////////
     // END of AUTONOMOUS code 
     ///////////////////////////////////////////////////////////////
     //
+    ///////////////////////////////////////////////////////////////
+    // BEGIN METHODS
+    ///////////////////////////////////////////////////////////////
     // DEFINE ALL METHODS
     //   Methods are small sections of code that are written once but can be used ("called")
     //   by the program multiple times. A method can have all of its values set internally (see robotStop, below)
@@ -186,13 +190,16 @@ public class TemplateAUTON extends LinearOpMode {
     }
     //
     // METHOD spinLeft(Time,Power)
-    public void spinLeft(long Time, double Power){        // The variable names Time and Power will be assigned
+    public void spinLeft(long Time, double Power){          // The variable names Time and Power will be assigned
                                                             //   to the values passed into the method, in the order
                                                             //   they are received
         leftDriveMotor.setPower(-Power);                    // Run motor with passed Power value inverted
                                                             //   so motor will spin in reverse
         rightDriveMotor.setPower(Power);                    // Run motor with passed Power value
-        sleep(Time);                                 // Wait here in code for duration of passed Time value,
+        sleep(Time);                                        // Wait here in code for duration of passed Time value,
                                                             //   (allows motors to run for duration of Time)
     }
-}
+}   // END of public class TemplateAUTON
+///////////////////////////////////////////////////////////////
+// END OF FILE
+///////////////////////////////////////////////////////////////
