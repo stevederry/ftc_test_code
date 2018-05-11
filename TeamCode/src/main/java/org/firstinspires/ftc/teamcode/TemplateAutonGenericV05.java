@@ -1,5 +1,5 @@
-
 ////////////////////////////////// THIS FILE TO BECOME TEACHING TEMPLATE ////////////////////////////////////////////
+// Edit Date:   May 11, 2018 @ 09:46
 // Team Name:   Name
 // Team Number: FTCNumber
 // Code Type:   OpMode for AUTONOMOUS
@@ -43,11 +43,11 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
     //
     //   Hardware
     //   FORMAT: hardware type, specific name of hardware, starting value
-    DcMotor leftDriveMotor = null;                          // One line for each hardware item
+    DcMotor leftDriveMotor  = null;                         // One line for each hardware item
     DcMotor rightDriveMotor = null;                         // Values before '=' MUST match EXACTLY the names used when the
-    DcMotor sweeperMotor = null;                            //   robot configuration was built using the FTC Robot Controler app
-    Servo gripperServo= null;                               //   on the robot controller phone
-    Servo sweeperServo= null;                               
+    DcMotor sweeperMotor    = null;                         //   robot configuration was built using the FTC Robot Controler app
+    Servo gripperServo      = null;                         //   on the robot controller phone
+    Servo sweeperServo      = null;                               
     //
     // DEFINE CODE CONSTANTS, VARIABLES, AND BEGINNING VALUES
     // NOTE: Constants should generally be defined here (outside of METHOD bodies) 
@@ -60,23 +60,23 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
     //   - long, double, etc. is the type of value held by the variable
     //
     // Drive times: all values are in milliseconds
-    public static final long DRIVE_TIME_TO_OBJECT = 10000;
-    public static final long DRIVE_TIME_OBJECT_TO_BASE = 2000;
-    public static final long DRIVE_TIME_45_DEG_TURN = 500;
-    public static final long DRIVE_TIME_90_DEG_TURN = DRIVE_TIME_45_DEG_TURN * 2;
+    public static final long DRIVE_TIME_TO_OBJECT       = 10000;
+    public static final long DRIVE_TIME_OBJECT_TO_BASE  = 2000;
+    public static final long DRIVE_TIME_45_DEG_TURN     = 500;
+    public static final long DRIVE_TIME_90_DEG_TURN     = DRIVE_TIME_45_DEG_TURN * 2;
     //
     // Drive powers (speeds): all values use range of 0 to 1
-    public static final double DRIVE_POWER_FAST = .8;
-    public static final double DRIVE_POWER_MEDIUM = .5;
-    public static final double DRIVE_POWER_SLOW = .2;
+    public static final double DRIVE_POWER_FAST         = .8;
+    public static final double DRIVE_POWER_MEDIUM       = .5;
+    public static final double DRIVE_POWER_SLOW         = .2;
     //
     // Position address values for servos
-    public static final double GRIPPER_SERVO_START = 10;                // Open and stowed to fit inside 18" sizing cube
-    public static final double GRIPPER_SERVO_REST = 50;                 // Open wide enough to be fully clear of all moving items
-    public static final double GRIPPER_SERVO_OPEN = 100;                // Open to receive game elements
-    public static final double GRIPPER_SERVO_GRIP_LG = 150;             // Closed to grip large game elements
-    public static final double GRIPPER_SERVO_GRIP_SM = 200;             // Closed to grip small game elements
-    public static final double GRIPPER_SERVO_CLOSED = 250;              // Closed completely
+    public static final double GRIPPER_SERVO_START      = 10;           // Open and stowed to fit inside 18" sizing cube
+    public static final double GRIPPER_SERVO_REST       = 50;           // Open wide enough to be fully clear of all moving items
+    public static final double GRIPPER_SERVO_OPEN       = 100;          // Open to receive game elements
+    public static final double GRIPPER_SERVO_GRIP_LG    = 150;          // Closed to grip large game elements
+    public static final double GRIPPER_SERVO_GRIP_SM    = 200;          // Closed to grip small game elements
+    public static final double GRIPPER_SERVO_CLOSED     = 250;          // Closed completely
     //
     @Override
     // Override is a note to the compiler, that you expect that you are replacing a method
@@ -210,4 +210,8 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
         sleep(Time);                                        // Wait here in code for duration of passed Time value,
                                                             //   (allows motors to run for duration of Time)
     }
-}
+}   // END of public class TemplateAutonGenericV05
+//
+///////////////////////////////////////////////////////////////
+// END OF FILE
+///////////////////////////////////////////////////////////////
