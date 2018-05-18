@@ -72,14 +72,15 @@ public class TemplateAutonGenericV05 extends LinearOpMode {
     //
     // Position address values for servos
     public static final double GRIPPER_SERVO_START      = 10;           // Open and stowed to fit inside 18" sizing cube
-    public static final double GRIPPER_SERVO_REST       = 50;           // Open wide enough to be fully clear of all moving items
+                                                                        //   but not clear of other moving parts of robot
+    public static final double GRIPPER_SERVO_REST       = 50;           // Open and fully clear of all moving parts of robot
     public static final double GRIPPER_SERVO_OPEN       = 100;          // Open to receive game elements
     public static final double GRIPPER_SERVO_GRIP_LG    = 150;          // Closed to grip large game elements
     public static final double GRIPPER_SERVO_GRIP_SM    = 200;          // Closed to grip small game elements
     public static final double GRIPPER_SERVO_CLOSED     = 250;          // Closed completely
     //
     @Override
-    // Override is a note to the compiler, that you expect that you are replacing a method
+    // Override is a note to the compiler stating that you expect that you are replacing a method
     //   with the same name from the parent (extends XXX class). That way if you typo/change
     //   the method signature you will get an error.
     //
